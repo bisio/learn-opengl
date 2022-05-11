@@ -9,10 +9,12 @@
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+float level = 0.5f;
 
 int main()
 {
@@ -38,6 +40,7 @@ int main()
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -158,7 +161,7 @@ int main()
 
         ourShader.setInt("texture1",0);
         ourShader.setInt("texture2",1);
-
+        ourShader.setFloat("level", level);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D,texture1);
         glActiveTexture(GL_TEXTURE1);
@@ -201,4 +204,25 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    {
+        level -= 0.1f;
+        if (level < 0.0f) {
+            level = 0.0f;
+        }
+        std::cout << "\rnew level is " << level << "                            " << std::flush;
+    }
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    {
+        level += 0.1f;
+        if (level > 1.0f) {
+            level = 1.0f;
+        }
+        std::cout << "\rnew level is " << level << "                            " << std::flush;
+    }
+
 }
