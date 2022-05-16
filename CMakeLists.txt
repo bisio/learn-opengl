@@ -7,6 +7,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include_directories(libs/glad/include)
 include_directories(libs/stb_image)
+include_directories(libs/glm)
 include_directories(src)
 
 list(APPEND EXTRA_LIBS -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl)
@@ -35,6 +36,14 @@ target_link_libraries(container ${EXTRA_LIBS})
 add_executable(two-textures src/two-textures.cpp libs/glad/src/glad.c )
 target_link_libraries(two-textures ${EXTRA_LIBS})
 
+add_executable(rotation src/rotation.cpp libs/glad/src/glad.c )
+target_link_libraries(rotation ${EXTRA_LIBS})
+
+add_executable(tilted src/tilted.cpp libs/glad/src/glad.c )
+target_link_libraries(tilted ${EXTRA_LIBS})
+
+add_executable(cube src/cube.cpp libs/glad/src/glad.c )
+target_link_libraries(cube ${EXTRA_LIBS})
 
 file(COPY shaders/ DESTINATION shaders)
 
