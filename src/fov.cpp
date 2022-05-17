@@ -19,6 +19,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float level = 0.5f;
+float fov = 45.0f;
+float view_x = 0.0f;
+float view_z = -3.0f;
 
 int main()
 {
@@ -117,7 +120,7 @@ int main()
     int width, height, nrChannels;
     unsigned char *data1 = stbi_load("assets/container.jpg", &width, &height, &nrChannels, 0); 
 
-    std::cout << "Loaded texture1 image " << width << "x" << height << std::endl;
+    // std::cout << "Loaded texture1 image " << width << "x" << height << std::endl;
 
     if (data1) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data1);
@@ -148,7 +151,7 @@ int main()
 
     //stbi_image_free(data);
 
-    std::cout << "Texture loaded" << std::endl;
+    // std::cout << "Texture loaded" << std::endl;
 
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
@@ -182,12 +185,12 @@ int main()
     ourShader.setInt("texture2",1);
     
 
-    glm::mat4 view = glm::mat4(1.0f);
-    // note that we're translating the scene in the reverse direction of where we want to move
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f)); 
+    // glm::mat4 view = glm::mat4(1.0f);
+    // // note that we're translating the scene in the reverse direction of where we want to move
+    // view = glm::translate(view, glm::vec3(view_x, 0.0f, view_z)); 
 
     glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+    
 
     glEnable(GL_DEPTH_TEST);  
 
@@ -205,7 +208,6 @@ int main()
         glm::vec3(-1.3f,  1.0f, -1.5f)  
     };
 
-    ourShader.setMat4("view", view);
     ourShader.setMat4("projection", projection);
     // glm::mat4 model = glm::mat4(1.0f);
     // model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -217,6 +219,10 @@ int main()
         // -----
         processInput(window);
 
+        glm::mat4 view = glm::mat4(1.0f);
+    // note that we're translating the scene in the reverse direction of where we want to move
+        view = glm::translate(view, glm::vec3(view_x, 0.0f, view_z)); 
+
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -224,7 +230,7 @@ int main()
 
         // render the triangle
 
-                
+        projection = glm::perspective(glm::radians(fov), 800.0f / 600.0f, 0.1f, 100.0f);            
 
         ourShader.setFloat("level", level);
   
@@ -232,22 +238,18 @@ int main()
 
         for(unsigned int i = 0; i < 10; i++)
         {
-            
             glm::mat4 model = glm::mat4(1.0f);
             model = glm::translate(model, cubePositions[i]);
-            float angle = 20.0f * i;
-            float factor = 1.0f;
-            if ((i-1) % 3 == 0){
-                factor=(float)glfwGetTime();
-            } 
-            model = glm::rotate(model, factor * glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            float angle = 20.0f * i; 
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
-
+            ourShader.setMat4("projection", projection);
+            ourShader.setMat4("view", view);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
         //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        //glDrawArrays(GL_TRIANGLES, 0, 36);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -286,19 +288,26 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
     if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
     {
-        level -= 0.1f;
-        if (level < 0.0f) {
-            level = 0.0f;
-        }
-        std::cout << "\rnew level is " << level << "                            " << std::flush;
+        view_z -= 0.1f;
+        std::cout << "view_z: " << view_z << std::endl;
     }
+
     if (key == GLFW_KEY_UP && action == GLFW_PRESS)
     {
-        level += 0.1f;
-        if (level > 1.0f) {
-            level = 1.0f;
-        }
-        std::cout << "\rnew level is " << level << "                            " << std::flush;
+        view_z += 0.1f;
+        std::cout << "view_z: " << view_z << std::endl;
+    }
+
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+    {
+        view_x += 0.1f;
+        std::cout << "view_x: " << view_x << std::endl;
+    }
+
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    {
+        view_x -= 0.1f;
+        std::cout << "view_x: " << view_x << std::endl;
     }
 
 }

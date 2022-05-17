@@ -45,5 +45,9 @@ target_link_libraries(tilted ${EXTRA_LIBS})
 add_executable(cube src/cube.cpp libs/glad/src/glad.c )
 target_link_libraries(cube ${EXTRA_LIBS})
 
+add_executable(fov  src/fov.cpp libs/glad/src/glad.c )
+target_link_libraries(fov ${EXTRA_LIBS})
+
+
 file(COPY shaders/ DESTINATION shaders)
 
