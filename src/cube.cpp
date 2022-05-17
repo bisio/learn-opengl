@@ -237,10 +237,10 @@ int main()
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             float factor = 1.0f;
-            if ((i-1) % 3 == 0){
-                factor=(float)glfwGetTime();
+            if (i % 3 == 0){
+                angle = glfwGetTime() * 25.0f;
             } 
-            model = glm::rotate(model, factor * glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model,  glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             ourShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
