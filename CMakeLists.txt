@@ -48,6 +48,14 @@ target_link_libraries(cube ${EXTRA_LIBS})
 add_executable(fov  src/fov.cpp libs/glad/src/glad.c )
 target_link_libraries(fov ${EXTRA_LIBS})
 
+add_executable(camera-spin  src/camera-spin.cpp libs/glad/src/glad.c )
+target_link_libraries(camera-spin ${EXTRA_LIBS})
+
+add_executable(camera-move  src/camera-move.cpp libs/glad/src/glad.c )
+target_link_libraries(camera-move ${EXTRA_LIBS})
+
+add_executable(camera-class src/camera-class.cpp libs/glad/src/glad.c )
+target_link_libraries(camera-class ${EXTRA_LIBS})
 
 file(COPY shaders/ DESTINATION shaders)
 
