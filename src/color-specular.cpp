@@ -125,7 +125,7 @@ int main() {
     glEnableVertexAttribArray(0);
 
 
-    Shader lightingShader("shaders/color-diff.vs", "shaders/color-diff.fs");
+    Shader lightingShader("shaders/color-specular.vs", "shaders/color-specular.fs");
     Shader lightCubeShader("shaders/lc1.vs","shaders/lc1.fs");
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 model = glm::mat4(1.0f);
@@ -148,6 +148,7 @@ int main() {
         lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
         lightingShader.setVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);
+        lightingShader.setVec3("viewPos", camera.Position.x, camera.Position.y, camera.Position.z);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = camera.GetViewMatrix();
         lightingShader.setMat4("projection", projection);
