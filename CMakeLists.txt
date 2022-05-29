@@ -63,5 +63,9 @@ target_link_libraries(color ${EXTRA_LIBS})
 add_executable(color-ambient src/color-ambient.cpp libs/glad/src/glad.c )
 target_link_libraries(color-ambient ${EXTRA_LIBS})
 
+add_executable(color-diffusive src/color-diffusive.cpp libs/glad/src/glad.c )
+target_link_libraries(color-diffusive ${EXTRA_LIBS})
+
+
 file(COPY shaders/ DESTINATION shaders)
 
