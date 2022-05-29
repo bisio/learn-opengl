@@ -57,5 +57,11 @@ target_link_libraries(camera-move ${EXTRA_LIBS})
 add_executable(camera-class src/camera-class.cpp libs/glad/src/glad.c )
 target_link_libraries(camera-class ${EXTRA_LIBS})
 
+add_executable(color src/color.cpp libs/glad/src/glad.c )
+target_link_libraries(color ${EXTRA_LIBS})
+
+add_executable(color-ambient src/color-ambient.cpp libs/glad/src/glad.c )
+target_link_libraries(color-ambient ${EXTRA_LIBS})
+
 file(COPY shaders/ DESTINATION shaders)
 

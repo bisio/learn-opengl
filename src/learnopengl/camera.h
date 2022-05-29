@@ -112,6 +112,35 @@ public:
             Zoom = 45.0f; 
     }
 
+    void saveCamera(){
+        std::ofstream out;
+        out.open("camera.dat", std::ios::out |std::ios::binary);
+        out.write(reinterpret_cast<const char*> (&Position.x ),sizeof(float));
+        out.write(reinterpret_cast<const char*> (&Position.y ),sizeof(float));
+        out.write(reinterpret_cast<const char*> (&Position.z ),sizeof(float));
+
+        out.write(reinterpret_cast<const char*> (&Front.x ),sizeof(float));
+        out.write(reinterpret_cast<const char*> (&Front.y ),sizeof(float));
+        out.write(reinterpret_cast<const char*> (&Front.z ),sizeof(float));
+
+        out.close();
+    }
+
+    void loadCamera(){
+        std::ifstream  in;
+        in.open("camera.dat", std::ios::in | std::ios::binary);
+        
+        in.read(reinterpret_cast<char*> (&Position.x), sizeof(float));
+        in.read(reinterpret_cast<char*> (&Position.y), sizeof(float));
+        in.read(reinterpret_cast<char*> (&Position.z), sizeof(float));
+
+        in.read(reinterpret_cast<char*> (&Front.x), sizeof(float));
+        in.read(reinterpret_cast<char*> (&Front.y), sizeof(float));
+        in.read(reinterpret_cast<char*> (&Front.z), sizeof(float));
+
+        in.close();
+    }
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
