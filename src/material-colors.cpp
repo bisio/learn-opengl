@@ -125,8 +125,8 @@ int main() {
     glEnableVertexAttribArray(0);
 
 
-    Shader lightingShader("shaders/color-specular.vs", "shaders/color-specular.fs");
-    Shader lightCubeShader("shaders/lc1.vs","shaders/lc1.fs");
+    Shader lightingShader("shaders/material.vs", "shaders/material.fs");
+    Shader lightCubeShader("shaders/lc2.vs","shaders/lc2.fs");
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 model = glm::mat4(1.0f);
 
@@ -146,7 +146,27 @@ int main() {
         lightingShader.setMat4("model",model);
         
         lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+
+
+        glm::vec3 lightColor;
+        lightColor.x = sin(glfwGetTime() * 2.0f);
+        lightColor.y = sin(glfwGetTime() * 0.7f);
+        lightColor.z = sin(glfwGetTime() * 1.3f);
         lightingShader.setVec3("lightColor",  1.0f, 1.0f, 1.0f);
+
+        glm::vec3 diffuseColor = lightColor   * glm::vec3(0.5f);
+        glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); 
+
+
+        lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+        lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+        lightingShader.setFloat("material.shininess", 32.0f);
+
+        lightingShader.setVec3("light.ambient",  ambientColor);
+        lightingShader.setVec3("light.diffuse",  diffuseColor); // darken diffuse light a bit
+        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f); 
+
         lightingShader.setVec3("lightPos", lightPos);
         lightingShader.setVec3("viewPos", camera.Position);
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -164,6 +184,7 @@ int main() {
         lightCubeShader.use();
         lightCubeShader.setMat4("projection", projection);
         lightCubeShader.setMat4("view", view);
+        lightCubeShader.setVec3("diffuseColor", diffuseColor);
 
         model = glm::mat4(1.0f);
         model = glm::translate(model, lightPos);

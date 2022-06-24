@@ -69,5 +69,17 @@ target_link_libraries(color-diffusive ${EXTRA_LIBS})
 add_executable(color-specular src/color-specular.cpp libs/glad/src/glad.c )
 target_link_libraries(color-specular ${EXTRA_LIBS})
 
+add_executable(color-specular-moving src/color-specular-moving.cpp libs/glad/src/glad.c )
+target_link_libraries(color-specular-moving ${EXTRA_LIBS})
+
+add_executable(material src/material.cpp libs/glad/src/glad.c )
+target_link_libraries(material ${EXTRA_LIBS})
+
+add_executable(material-colors src/material-colors.cpp libs/glad/src/glad.c )
+target_link_libraries(material-colors ${EXTRA_LIBS})
+
+add_executable(lmap src/lmap.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap ${EXTRA_LIBS})
+
 file(COPY shaders/ DESTINATION shaders)
 
