@@ -81,5 +81,24 @@ target_link_libraries(material-colors ${EXTRA_LIBS})
 add_executable(lmap src/lmap.cpp libs/glad/src/glad.c )
 target_link_libraries(lmap ${EXTRA_LIBS})
 
+add_executable(lmap-inv src/lmap-inv.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-inv ${EXTRA_LIBS})
+
+add_executable(lmap-col src/lmap-col.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-col ${EXTRA_LIBS})
+
+add_executable(lmap-emissive src/lmap-emissive.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-emissive ${EXTRA_LIBS})
+
+add_executable(lmap-directional src/lmap-directional.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-directional ${EXTRA_LIBS})
+
+add_executable(lmap-att src/lmap-att.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-att ${EXTRA_LIBS})
+
+add_executable(lmap-flash src/lmap-flash.cpp libs/glad/src/glad.c )
+target_link_libraries(lmap-flash ${EXTRA_LIBS})
+
+
 file(COPY shaders/ DESTINATION shaders)
 
